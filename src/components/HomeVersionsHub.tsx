@@ -36,6 +36,14 @@ const versions = [
       "Layout tipo joalheria: barra verde, busca, logo central, menu caps, grade 4 colunas e ofertas.",
     accent: "from-emerald-100/90 to-white",
   },
+  {
+    href: "/v5",
+    label: "Versão 5",
+    title: "Masonry",
+    description:
+      "Fundo preto, grade 2 colunas sem gap, imagens em alturas variadas e texto branco discreto.",
+    accent: "from-neutral-800 to-black",
+  },
 ] as const;
 
 export default function HomeVersionsHub() {
@@ -55,12 +63,12 @@ export default function HomeVersionsHub() {
             Escolha uma versão do site
           </h1>
           <p className="text-muted text-sm md:text-base max-w-xl mx-auto leading-relaxed">
-            Compare as vitrines: clássica, editorial, vitrail colorido e loja
-            minimal estilo boutique.
+            Compare as vitrines: clássica, editorial, vitrail, loja boutique e parede
+            escura estilo galeria.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {versions.map((v, i) => (
             <motion.div
               key={v.href}

@@ -1,0 +1,146 @@
+import { Product } from "@/types/product";
+
+export const products: Product[] = [
+  {
+    slug: "cathedral-fragment",
+    title: "Cathedral Fragment",
+    description:
+      "A tabletop stained glass piece inspired by Gothic cathedral rose windows. Intricate geometric patterns with warm amber and deep crimson tones.",
+    price: 42000,
+    compareAtPrice: 48000,
+    currency: "BRL",
+    available: true,
+    images: [
+      "https://picsum.photos/seed/cathedral1/800/800",
+      "https://picsum.photos/seed/cathedral2/800/800",
+    ],
+    dimensions: { width: 12, height: 15, depth: 2, unit: "cm" },
+    materials: ["Stained Glass", "Mirror", "Solder (60/40 Lead/Tin)"],
+    year: 2025,
+    extras: ["Signed archival print included"],
+    category: "Tabletop",
+  },
+  {
+    slug: "nocturnal-garden",
+    title: "Nocturnal Garden",
+    description:
+      "Organic botanical forms rendered in deep emerald and midnight blue glass. Silver solder lines trace the veins of imaginary night-blooming flowers.",
+    price: 38000,
+    compareAtPrice: 45000,
+    currency: "BRL",
+    available: true,
+    images: [
+      "https://picsum.photos/seed/nocturnal1/800/800",
+      "https://picsum.photos/seed/nocturnal2/800/800",
+    ],
+    dimensions: { width: 10, height: 13, depth: 2, unit: "cm" },
+    materials: ["Stained Glass", "Digital Render", "Solder (60/40 Lead/Tin)"],
+    year: 2025,
+    category: "Tabletop",
+  },
+  {
+    slug: "mechanical-atlas",
+    title: "Mechanical Atlas",
+    description:
+      "An assemblage of miniature gears, dials, and clock faces embedded in amber and smoke-grey glass. Part timepiece, part sculpture.",
+    price: 55000,
+    currency: "BRL",
+    available: false,
+    images: [
+      "https://picsum.photos/seed/mechanic1/800/800",
+      "https://picsum.photos/seed/mechanic2/800/800",
+    ],
+    dimensions: { width: 14, height: 16, depth: 3, unit: "cm" },
+    materials: ["Stained Glass", "Found Objects", "Mirror", "Solder (60/40 Lead/Tin)"],
+    year: 2024,
+    extras: ["Signed archival print included"],
+    category: "Assemblage",
+  },
+  {
+    slug: "solar-reliquary",
+    title: "Solar Reliquary",
+    description:
+      "Radiant yellows and burnt oranges form a sunburst pattern, housing small treasured objects behind glass panels.",
+    price: 48000,
+    compareAtPrice: 55000,
+    currency: "BRL",
+    available: true,
+    images: [
+      "https://picsum.photos/seed/solar1/800/800",
+      "https://picsum.photos/seed/solar2/800/800",
+    ],
+    dimensions: { width: 11, height: 14, depth: 2, unit: "cm" },
+    materials: ["Stained Glass", "Brass", "Solder (60/40 Lead/Tin)"],
+    year: 2025,
+    category: "Reliquary",
+  },
+  {
+    slug: "pitcher-index",
+    title: "Pitcher Index",
+    description:
+      "A table top stained glass piece combining organic plant forms with geometric indexing. Vivid neon pinks meet classical amber in an unexpected dialogue.",
+    price: 45000,
+    currency: "BRL",
+    available: false,
+    images: [
+      "https://picsum.photos/seed/pitcher1/800/800",
+      "https://picsum.photos/seed/pitcher2/800/800",
+    ],
+    dimensions: { width: 9.5, height: 9, depth: 2, unit: "cm" },
+    materials: ["Stained Glass", "Mirror", "Digital Render", "Solder (60/40 Lead/Tin)"],
+    year: 2025,
+    extras: ["Signed archival print included"],
+    category: "Tabletop",
+  },
+  {
+    slug: "transit-corridor",
+    title: "Transit Corridor",
+    description:
+      "A long horizontal composition suggesting movement through architectural space. Cool greys and steel blues with sudden bursts of warm amber.",
+    price: 62000,
+    currency: "BRL",
+    available: true,
+    images: [
+      "https://picsum.photos/seed/transit1/800/800",
+      "https://picsum.photos/seed/transit2/800/800",
+    ],
+    dimensions: { width: 20, height: 8, depth: 2, unit: "cm" },
+    materials: ["Stained Glass", "Mirror", "Solder (60/40 Lead/Tin)"],
+    year: 2024,
+    category: "Horizontal",
+  },
+  {
+    slug: "vermillion-archive",
+    title: "Vermillion Archive",
+    description:
+      "Dense collage of miniature elements arranged in a grid-like composition. Deep reds dominate, punctuated by metallic silver and aged gold.",
+    price: 51000,
+    currency: "BRL",
+    available: true,
+    images: [
+      "https://picsum.photos/seed/vermillion1/800/800",
+      "https://picsum.photos/seed/vermillion2/800/800",
+    ],
+    dimensions: { width: 13, height: 15, depth: 3, unit: "cm" },
+    materials: ["Stained Glass", "Found Objects", "Solder (60/40 Lead/Tin)"],
+    year: 2025,
+    category: "Assemblage",
+  },
+  {
+    slug: "cipher-panel",
+    title: "Cipher Panel",
+    description:
+      "Mysterious symbols and abstract letterforms arranged behind layers of clear and frosted glass. A piece that invites prolonged contemplation.",
+    price: 39000,
+    currency: "BRL",
+    available: true,
+    images: [
+      "https://picsum.photos/seed/cipher1/800/800",
+      "https://picsum.photos/seed/cipher2/800/800",
+    ],
+    dimensions: { width: 10, height: 12, depth: 2, unit: "cm" },
+    materials: ["Stained Glass", "Frosted Glass", "Solder (60/40 Lead/Tin)"],
+    year: 2025,
+    category: "Tabletop",
+  },
+];

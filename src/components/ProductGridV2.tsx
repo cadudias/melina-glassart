@@ -8,7 +8,7 @@ import ProductCardV2 from "./ProductCardV2";
 export default function ProductGridV2({ products }: { products: Product[] }) {
   return (
     <section className="relative py-16 md:py-24">
-      <div className="max-w-[1400px] mx-auto px-5 md:px-10">
+      <div className="max-w-[1760px] mx-auto px-5 md:px-10">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-14 md:mb-16 pb-8 border-b border-white/10">
           <div>
             <motion.p
@@ -35,7 +35,7 @@ export default function ProductGridV2({ products }: { products: Product[] }) {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-16">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-10 gap-y-16">
           {products.map((product, index) => (
             <ProductCardV2 key={product.slug} product={product} index={index} />
           ))}

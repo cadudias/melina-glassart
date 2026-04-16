@@ -19,18 +19,34 @@ export default function ProductCardV5({
   index: number;
 }) {
   const aspectClass = ASPECTS[index % ASPECTS.length];
+  const primarySrc = product.images[0];
+  const hoverSrc = product.images[1];
 
   return (
     <article className="group">
       <Link href={`/product/${product.slug}`} className="block">
         <div className={`relative w-full overflow-hidden bg-neutral-950 ${aspectClass}`}>
           <Image
-            src={product.images[0]}
+            src={primarySrc}
             alt={product.title}
             fill
-            sizes="(max-width: 1440px) 50vw, 720px"
-            className="object-cover transition-opacity duration-300 group-hover:opacity-90"
+            sizes="50vw"
+            className={
+              hoverSrc
+                ? "object-cover transition-opacity duration-500 ease-out group-hover:opacity-0"
+                : "object-cover transition-opacity duration-300 group-hover:opacity-90"
+            }
           />
+          {hoverSrc && (
+            <Image
+              src={hoverSrc}
+              alt=""
+              fill
+              sizes="50vw"
+              className="object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
+              aria-hidden
+            />
+          )}
           {!product.available && (
             <span className="absolute top-2 left-2 text-[9px] tracking-[0.2em] uppercase bg-black/70 text-white px-2 py-1">
               Esgotado

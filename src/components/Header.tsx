@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/components/CartProvider";
+import { useI18n } from "@/i18n/LanguageProvider";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 type HeaderProps = {
   variant?: "light" | "dark" | "vitrail";
@@ -12,9 +14,16 @@ type HeaderProps = {
 export default function Header({ variant = "light" }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { totalItems, openCart } = useCart();
+  const { t } = useI18n();
 
   const isDark = variant === "dark";
   const isVitrail = variant === "vitrail";
+
+  const navLinks = [
+    { label: t.nav.works, href: "/" },
+    { label: t.nav.about, href: "/about" },
+    { label: t.nav.contact, href: "/contact" },
+  ];
 
   return (
     <header
@@ -43,42 +52,22 @@ export default function Header({ variant = "light" }: HeaderProps) {
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
-          <Link
-            href="/v1"
-            className={
-              isDark
-                ? "text-sm tracking-wider uppercase text-stone-400 hover:text-stone-100 transition-colors duration-300"
-                : isVitrail
-                  ? "text-sm tracking-wider uppercase text-stone-700 hover:text-teal-900 transition-colors duration-300"
-                  : "text-sm tracking-wider uppercase text-muted hover:text-foreground transition-colors duration-300"
-            }
-          >
-            Works
-          </Link>
-          <Link
-            href="/about"
-            className={
-              isDark
-                ? "text-sm tracking-wider uppercase text-stone-400 hover:text-stone-100 transition-colors duration-300"
-                : isVitrail
-                  ? "text-sm tracking-wider uppercase text-stone-700 hover:text-teal-900 transition-colors duration-300"
-                  : "text-sm tracking-wider uppercase text-muted hover:text-foreground transition-colors duration-300"
-            }
-          >
-            About
-          </Link>
-          <Link
-            href="/contact"
-            className={
-              isDark
-                ? "text-sm tracking-wider uppercase text-stone-400 hover:text-stone-100 transition-colors duration-300"
-                : isVitrail
-                  ? "text-sm tracking-wider uppercase text-stone-700 hover:text-teal-900 transition-colors duration-300"
-                  : "text-sm tracking-wider uppercase text-muted hover:text-foreground transition-colors duration-300"
-            }
-          >
-            Contact
-          </Link>
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={
+                isDark
+                  ? "text-sm tracking-wider uppercase text-stone-400 hover:text-stone-100 transition-colors duration-300"
+                  : isVitrail
+                    ? "text-sm tracking-wider uppercase text-stone-700 hover:text-teal-900 transition-colors duration-300"
+                    : "text-sm tracking-wider uppercase text-muted hover:text-foreground transition-colors duration-300"
+              }
+            >
+              {link.label}
+            </Link>
+          ))}
+          <LanguageSwitcher variant={variant} />
           <button
             onClick={openCart}
             className={
@@ -88,7 +77,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
                   ? "relative p-2 text-stone-600 hover:text-amber-900 transition-colors"
                   : "relative p-2 text-muted hover:text-foreground transition-colors"
             }
-            aria-label="Abrir carrinho"
+            aria-label={t.nav.openCart}
           >
             <svg
               width="22"
@@ -135,7 +124,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
                   ? "relative p-2 text-stone-600 hover:text-amber-900 transition-colors"
                   : "relative p-2 text-muted hover:text-foreground transition-colors"
             }
-            aria-label="Abrir carrinho"
+            aria-label={t.nav.openCart}
           >
             <svg
               width="22"
@@ -175,7 +164,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="flex flex-col gap-1.5 p-2"
-            aria-label="Toggle menu"
+            aria-label={t.nav.toggleMenu}
           >
             <motion.span
               animate={mobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
@@ -231,10 +220,10 @@ export default function Header({ variant = "light" }: HeaderProps) {
             }
           >
             <div className="flex flex-col gap-4 px-6 py-6">
-              {["Works", "About", "Contact"].map((item) => (
+              {navLinks.map((link) => (
                 <Link
-                  key={item}
-                  href={item === "Works" ? "/v1" : `/${item.toLowerCase()}`}
+                  key={link.href}
+                  href={link.href}
                   onClick={() => setMobileOpen(false)}
                   className={
                     isDark
@@ -244,9 +233,12 @@ export default function Header({ variant = "light" }: HeaderProps) {
                         : "text-sm tracking-wider uppercase text-muted hover:text-foreground transition-colors duration-300"
                   }
                 >
-                  {item}
+                  {link.label}
                 </Link>
               ))}
+              <div className="pt-2">
+                <LanguageSwitcher variant={variant} />
+              </div>
             </div>
           </motion.div>
         )}

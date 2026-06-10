@@ -25,14 +25,14 @@ export default async function ProductDetailPage({
   const nextProduct = products[(index + 1) % products.length];
 
   return (
-    <>
-      <Header />
+    <div className="min-h-full bg-[#0c0d10] text-[#ece8e1] font-[family-name:var(--font-v2-sans)]">
+      <Header variant="dark" />
       <ProductDetailView
         product={product}
         previousProduct={previousProduct}
         nextProduct={nextProduct}
       />
-      <Footer />
-    </>
+      <Footer variant="dark" />
+    </div>
   );
 }

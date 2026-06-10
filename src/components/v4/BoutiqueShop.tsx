@@ -25,9 +25,9 @@ function sortProducts(list: Product[], key: SortKey): Product[] {
     case "name-desc":
       return copy.sort((a, b) => b.title.localeCompare(a.title));
     case "price-asc":
-      return copy.sort((a, b) => a.price - b.price);
+      return copy.sort((a, b) => a.price.en.amount - b.price.en.amount);
     case "price-desc":
-      return copy.sort((a, b) => b.price - a.price);
+      return copy.sort((a, b) => b.price.en.amount - a.price.en.amount);
     default:
       return copy;
   }

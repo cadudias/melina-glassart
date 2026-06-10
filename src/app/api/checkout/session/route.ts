@@ -9,6 +9,7 @@ type CheckoutSessionCreateParams = NonNullable<
 type CheckoutItemInput = {
   slug: string;
   quantity: number;
+  currency?: "USD" | "BRL";
 };
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
@@ -43,6 +44,9 @@ export async function POST(request: Request) {
   }
 
   const lineItems: NonNullable<CheckoutSessionCreateParams["line_items"]> = [];
+  const baseUrl = getBaseUrl(request);
+  const toAbsoluteUrl = (src: string) =>
+    src.startsWith("http") ? src : `${baseUrl}${src}`;
 
   for (const item of items) {
     if (!item?.slug || !Number.isInteger(item.quantity) || item.quantity <= 0) {
@@ -67,15 +71,20 @@ export async function POST(request: Request) {
       );
     }
 
+    const money =
+      Object.values(product.price).find(
+        (entry) => entry.currency === item.currency,
+      ) ?? product.price.en;
+
     lineItems.push({
       quantity: item.quantity,
       price_data: {
-        currency: product.currency.toLowerCase(),
-        unit_amount: product.price,
+        currency: money.currency.toLowerCase(),
+        unit_amount: money.amount,
         product_data: {
           name: product.title,
-          description: product.description,
-          images: product.images.slice(0, 1),
+          description: product.description.en,
+          images: product.images.slice(0, 1).map(toAbsoluteUrl),
           metadata: { slug: product.slug },
         },
       },
@@ -83,7 +92,6 @@ export async function POST(request: Request) {
   }
 
   const stripe = new Stripe(stripeSecretKey);
-  const baseUrl = getBaseUrl(request);
 
   try {
     const session = await stripe.checkout.sessions.create({

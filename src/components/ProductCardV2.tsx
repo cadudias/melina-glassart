@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Product } from "@/types/product";
+import { useI18n } from "@/i18n/LanguageProvider";
 
 export default function ProductCardV2({
   product,
@@ -13,7 +13,7 @@ export default function ProductCardV2({
   product: Product;
   index: number;
 }) {
-  const [isHovered, setIsHovered] = useState(false);
+  const { t } = useI18n();
 
   return (
     <motion.article
@@ -27,34 +27,29 @@ export default function ProductCardV2({
       }}
       className="font-[family-name:var(--font-v2-sans)]"
     >
-      <Link
-        href={`/product/${product.slug}`}
-        className="group block"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
+      <Link href={`/product/${product.slug}`} className="group block">
         <div className="relative aspect-[4/5] overflow-hidden bg-[#16181f] mb-5 ring-1 ring-white/10">
-          <Image
-            src={product.images[0]}
-            alt={product.title}
-            fill
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-            style={{ opacity: isHovered && product.images[1] ? 0 : 1 }}
-          />
-          {product.images[1] && (
+          <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.04]">
             <Image
-              src={product.images[1]}
-              alt={`${product.title} — vista alternativa`}
+              src={product.images[0]}
+              alt={product.title}
               fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover transition-opacity duration-500"
-              style={{ opacity: isHovered ? 1 : 0 }}
+              sizes="(max-width: 640px) 100vw, 33vw"
+              className="object-cover"
             />
-          )}
+            {product.images[1] && (
+              <Image
+                src={product.images[1]}
+                alt={`${product.title} — ${t.card.alternateView}`}
+                fill
+                sizes="(max-width: 640px) 100vw, 33vw"
+                className="object-cover opacity-0 transition-opacity duration-[900ms] ease-in-out group-hover:opacity-100"
+              />
+            )}
+          </div>
           {!product.available && (
             <div className="absolute top-3 left-3 px-2.5 py-1 bg-[#d4af37] text-[#0c0d10] text-[9px] tracking-[0.2em] uppercase font-semibold">
-              Esgotado
+              {t.card.soldOut}
             </div>
           )}
           <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-[#d4af37]/60 via-white/20 to-transparent" />
@@ -63,7 +58,7 @@ export default function ProductCardV2({
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-[10px] tracking-[0.28em] uppercase text-[#8a8580] mb-1.5">
-              {product.category ?? "Obra"}
+              {product.category ?? t.card.fallbackCategory}
             </p>
             <h3 className="font-[family-name:var(--font-v2-serif)] text-xl md:text-2xl text-[#f5f2ec] group-hover:text-[#d4af37] transition-colors duration-300 leading-snug">
               {product.title}

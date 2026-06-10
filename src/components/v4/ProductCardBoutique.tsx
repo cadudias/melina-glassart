@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Product } from "@/types/product";
+import { Product, Currency } from "@/types/product";
+import { DEFAULT_LOCALE } from "@/i18n/dictionary";
 
-function formatPrice(cents: number, currency: Product["currency"]): string {
+function formatPrice(cents: number, currency: Currency): string {
   const locale = currency === "BRL" ? "pt-BR" : "en-US";
   return new Intl.NumberFormat(locale, {
     style: "currency",
@@ -13,8 +14,9 @@ function formatPrice(cents: number, currency: Product["currency"]): string {
 }
 
 export default function ProductCardBoutique({ product }: { product: Product }) {
-  const onSale =
-    product.compareAtPrice != null && product.compareAtPrice > product.price;
+  const money = product.price[DEFAULT_LOCALE];
+  const compareAt = product.compareAtPrice?.[DEFAULT_LOCALE];
+  const onSale = compareAt != null && compareAt.amount > money.amount;
 
   return (
     <article className="group w-full min-w-0">
@@ -44,7 +46,7 @@ export default function ProductCardBoutique({ product }: { product: Product }) {
         <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1 text-base md:text-lg">
           {onSale && (
             <span className="text-neutral-400 line-through tabular-nums text-sm md:text-base">
-              {formatPrice(product.compareAtPrice!, product.currency)}
+              {formatPrice(compareAt!.amount, compareAt!.currency)}
             </span>
           )}
           <span
@@ -52,9 +54,9 @@ export default function ProductCardBoutique({ product }: { product: Product }) {
               onSale ? "text-emerald-700" : "text-neutral-900"
             }`}
           >
-            {formatPrice(product.price, product.currency)}
+            {formatPrice(money.amount, money.currency)}
           </span>
-          <span className="text-sm text-neutral-500 uppercase">{product.currency}</span>
+          <span className="text-sm text-neutral-500 uppercase">{money.currency}</span>
         </div>
       </Link>
     </article>

@@ -1,11 +1,25 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Geist, Instrument_Serif, DM_Sans } from "next/font/google";
 import { CartProvider } from "@/components/CartProvider";
+import { LanguageProvider } from "@/i18n/LanguageProvider";
 import "./globals.css";
 
 const geist = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+});
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-v2-serif",
+  display: "swap",
+});
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-v2-sans",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -20,9 +34,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geist.variable} h-full antialiased`}>
+    <html
+      lang="en"
+      className={`${geist.variable} ${instrumentSerif.variable} ${dmSans.variable} h-full antialiased`}
+    >
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        <CartProvider>{children}</CartProvider>
+        <LanguageProvider>
+          <CartProvider>{children}</CartProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

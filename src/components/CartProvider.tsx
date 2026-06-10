@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import Image from "next/image";
+import { useI18n } from "@/i18n/LanguageProvider";
 
 type CartItem = {
   slug: string;
@@ -64,6 +65,7 @@ function CartDrawer({
   updateQuantity: (slug: string, quantity: number) => void;
   checkout: () => Promise<void>;
 }) {
+  const { t } = useI18n();
   const hasItems = items.length > 0;
   const currency = items[0]?.currency ?? "BRL";
 
@@ -85,24 +87,23 @@ function CartDrawer({
         <div className="h-full flex flex-col">
           <div className="flex items-center justify-between px-6 pt-6 pb-5 border-b border-border/70">
             <h2 className="text-3xl font-light tracking-tight">
-              Carrinho{" "}
+              {t.cart.title}{" "}
               <span className="text-base text-muted">
-                ({items.length} {items.length === 1 ? "item" : "itens"})
+                ({items.length}{" "}
+                {items.length === 1 ? t.cart.itemSingular : t.cart.itemPlural})
               </span>
             </h2>
             <button
               onClick={closeCart}
               className="text-muted hover:text-foreground text-3xl leading-none"
-              aria-label="Fechar carrinho"
+              aria-label={t.cart.close}
             >
               ×
             </button>
           </div>
 
           <div className="flex-1 overflow-y-auto px-6 py-5">
-            {!hasItems && (
-              <p className="text-muted">Seu carrinho está vazio.</p>
-            )}
+            {!hasItems && <p className="text-muted">{t.cart.empty}</p>}
 
             {items.map((item) => (
               <div
@@ -126,7 +127,7 @@ function CartDrawer({
                     <button
                       onClick={() => updateQuantity(item.slug, item.quantity - 1)}
                       className="w-9 h-9 text-lg hover:bg-surface-hover"
-                      aria-label="Diminuir quantidade"
+                      aria-label={t.cart.decrease}
                     >
                       −
                     </button>
@@ -134,7 +135,7 @@ function CartDrawer({
                     <button
                       onClick={() => updateQuantity(item.slug, item.quantity + 1)}
                       className="w-9 h-9 text-lg hover:bg-surface-hover"
-                      aria-label="Aumentar quantidade"
+                      aria-label={t.cart.increase}
                     >
                       +
                     </button>
@@ -145,9 +146,9 @@ function CartDrawer({
                   <button
                     onClick={() => removeFromCart(item.slug)}
                     className="text-muted hover:text-foreground text-sm"
-                    aria-label="Remover item"
+                    aria-label={t.cart.remove}
                   >
-                    Remover
+                    {t.cart.remove}
                   </button>
                   <p className="text-2xl leading-none">
                     {formatPrice(item.price * item.quantity, item.currency)}
@@ -159,25 +160,25 @@ function CartDrawer({
 
           <div className="px-6 py-5 border-t border-border/70 space-y-4">
             <div className="flex items-end justify-between gap-4">
-              <p className="text-2xl md:text-3xl leading-none font-light">Total estimado</p>
+              <p className="text-2xl md:text-3xl leading-none font-light">
+                {t.cart.totalEstimated}
+              </p>
               <p className="text-3xl md:text-4xl leading-none font-light whitespace-nowrap">
                 {formatPrice(totalPrice, currency)}
               </p>
             </div>
 
-            <p className="text-muted text-sm">
-              Impostos e frete são calculados no checkout.
-            </p>
+            <p className="text-muted text-sm">{t.cart.taxesNote}</p>
 
             <button
               onClick={checkout}
               disabled={!hasItems || isCheckingOut}
               className="w-full py-3.5 bg-accent text-white text-xl font-medium hover:bg-accent-dim transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {isCheckingOut ? "Redirecionando..." : "Finalizar compra"}
+              {isCheckingOut ? t.cart.redirecting : t.cart.checkout}
             </button>
             <button className="w-full py-3.5 border border-accent text-accent text-xl hover:bg-surface-hover transition-colors">
-              Ver carrinho
+              {t.cart.viewCart}
             </button>
           </div>
         </div>
@@ -187,6 +188,7 @@ function CartDrawer({
 }
 
 export function CartProvider({ children }: { children: ReactNode }) {
+  const { t } = useI18n();
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
@@ -271,19 +273,20 @@ export function CartProvider({ children }: { children: ReactNode }) {
           items: items.map((item) => ({
             slug: item.slug,
             quantity: item.quantity,
+            currency: item.currency,
           })),
         }),
       });
 
       const data = (await response.json()) as { url?: string; error?: string };
       if (!response.ok || !data.url) {
-        throw new Error(data.error ?? "Erro ao iniciar checkout.");
+        throw new Error(data.error ?? t.cart.checkoutError);
       }
 
       window.location.href = data.url;
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "Erro ao iniciar checkout.";
+        error instanceof Error ? error.message : t.cart.checkoutError;
       window.alert(message);
     } finally {
       setIsCheckingOut(false);

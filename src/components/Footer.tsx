@@ -1,12 +1,28 @@
+"use client";
+
 import Link from "next/link";
+import { useI18n } from "@/i18n/LanguageProvider";
 
 type FooterProps = {
   variant?: "light" | "dark" | "vitrail";
 };
 
 export default function Footer({ variant = "light" }: FooterProps) {
+  const { t } = useI18n();
   const isDark = variant === "dark";
   const isVitrail = variant === "vitrail";
+
+  const navItems = [
+    { label: t.nav.works, href: "/" },
+    { label: t.nav.about, href: "/about" },
+    { label: t.nav.contact, href: "/contact" },
+  ];
+
+  const legalItems = [
+    { label: t.footer.privacy, href: "/privacy" },
+    { label: t.footer.terms, href: "/terms" },
+    { label: t.footer.shipping, href: "/shipping" },
+  ];
 
   return (
     <footer
@@ -42,8 +58,7 @@ export default function Footer({ variant = "light" }: FooterProps) {
                     : "text-sm text-muted leading-relaxed max-w-[40ch]"
               }
             >
-              Handcrafted stained glass art. Each piece is unique, made with
-              traditional techniques and contemporary vision.
+              {t.footer.tagline}
             </p>
           </div>
 
@@ -58,14 +73,10 @@ export default function Footer({ variant = "light" }: FooterProps) {
                     : "text-xs tracking-[0.2em] uppercase text-muted mb-4"
               }
             >
-              Navigate
+              {t.footer.navigate}
             </p>
             <div className="flex flex-col gap-2">
-              {[
-                { label: "Works", href: "/v1" },
-                { label: "About", href: "/about" },
-                { label: "Contact", href: "/contact" },
-              ].map((link) => (
+              {navItems.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -94,14 +105,10 @@ export default function Footer({ variant = "light" }: FooterProps) {
                     : "text-xs tracking-[0.2em] uppercase text-muted mb-4"
               }
             >
-              Legal
+              {t.footer.legal}
             </p>
             <div className="flex flex-col gap-2">
-              {[
-                { label: "Privacy Policy", href: "/privacy" },
-                { label: "Terms of Use", href: "/terms" },
-                { label: "Shipping Info", href: "/shipping" },
-              ].map((link) => (
+              {legalItems.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -139,8 +146,7 @@ export default function Footer({ variant = "light" }: FooterProps) {
                   : "text-xs text-muted"
             }
           >
-            &copy; {new Date().getFullYear()} Melina Glass Art. All rights
-            reserved.
+            &copy; {new Date().getFullYear()} Melina Glass Art. {t.footer.rights}
           </p>
           <a
             href="https://instagram.com"

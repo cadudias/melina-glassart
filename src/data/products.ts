@@ -71,6 +71,10 @@ export const products: Product[] = [
     price: corePrice,
     available: true,
     images: coreStaticImages,
+    cardImages: [
+      "/images/core-static/01-card.jpg",
+      "/images/core-static/02-card.jpg",
+    ],
     dimensions: { width: 10, height: 10, depth: 10, unit: "cm" },
     materials: coreMaterials,
     year: 2026,
@@ -87,6 +91,10 @@ export const products: Product[] = [
     price: corePrice,
     available: true,
     images: coreBloomImages,
+    cardImages: [
+      "/images/core-bloom/01-card.jpg",
+      "/images/core-bloom/02-card.jpg",
+    ],
     dimensions: { width: 10, height: 10, depth: 10, unit: "cm" },
     materials: coreMaterials,
     year: 2026,

@@ -79,11 +79,12 @@ export default function ProductDetailView({
 
         <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1.2fr)_minmax(340px,0.8fr)] gap-10 xl:gap-14 items-start">
           <div>
-            <div className="relative aspect-square w-full overflow-hidden border border-white/10 bg-[#16181f]">
+            <div className="relative aspect-[3/2] w-full overflow-hidden border border-white/10 bg-[#16181f]">
               <Image
                 src={images[selectedImage]}
                 alt={product.title}
                 fill
+                quality={90}
                 sizes="(max-width: 1280px) 100vw, 65vw"
                 className="object-cover"
                 priority

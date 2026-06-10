@@ -72,30 +72,30 @@ function CartDrawer({
   return (
     <>
       <div
-        className={`fixed inset-0 z-[70] bg-black/25 transition-opacity ${
+        className={`fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm transition-opacity ${
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         onClick={closeCart}
       />
 
       <aside
-        className={`fixed top-0 right-0 z-[80] h-full w-full max-w-[480px] bg-background text-foreground border-l border-border/70 transition-transform duration-300 ${
+        className={`fixed top-0 right-0 z-[80] h-full w-full max-w-[480px] bg-[#0c0d10] text-[#ece8e1] border-l border-white/10 font-[family-name:var(--font-v2-sans)] transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
         aria-hidden={!isOpen}
       >
         <div className="h-full flex flex-col">
-          <div className="flex items-center justify-between px-6 pt-6 pb-5 border-b border-border/70">
-            <h2 className="text-3xl font-light tracking-tight">
+          <div className="flex items-center justify-between px-6 pt-6 pb-5 border-b border-white/10">
+            <h2 className="font-[family-name:var(--font-v2-serif)] text-3xl font-normal tracking-tight text-[#f5f2ec]">
               {t.cart.title}{" "}
-              <span className="text-base text-muted">
+              <span className="text-base text-[#8a8580]">
                 ({items.length}{" "}
                 {items.length === 1 ? t.cart.itemSingular : t.cart.itemPlural})
               </span>
             </h2>
             <button
               onClick={closeCart}
-              className="text-muted hover:text-foreground text-3xl leading-none"
+              className="text-[#8a8580] hover:text-[#f5f2ec] text-3xl leading-none transition-colors"
               aria-label={t.cart.close}
             >
               ×
@@ -103,14 +103,14 @@ function CartDrawer({
           </div>
 
           <div className="flex-1 overflow-y-auto px-6 py-5">
-            {!hasItems && <p className="text-muted">{t.cart.empty}</p>}
+            {!hasItems && <p className="text-[#8a8580]">{t.cart.empty}</p>}
 
             {items.map((item) => (
               <div
                 key={item.slug}
-                className="grid grid-cols-[88px_1fr_auto] gap-3 pb-5 mb-5 border-b border-border/70"
+                className="grid grid-cols-[88px_1fr_auto] gap-3 pb-5 mb-5 border-b border-white/10"
               >
-                <div className="relative h-[88px] w-[88px] bg-surface border border-border/60">
+                <div className="relative h-[88px] w-[88px] bg-[#16181f] border border-white/10">
                   <Image
                     src={item.image}
                     alt={item.title}
@@ -121,12 +121,16 @@ function CartDrawer({
                 </div>
 
                 <div>
-                  <p className="text-xl leading-tight mb-1.5">{item.title}</p>
-                  <p className="text-lg mb-3">{formatPrice(item.price, item.currency)}</p>
-                  <div className="inline-flex items-center border border-border">
+                  <p className="text-xl leading-tight mb-1.5 text-[#f5f2ec]">
+                    {item.title}
+                  </p>
+                  <p className="text-lg mb-3 text-[#d4d0c8]">
+                    {formatPrice(item.price, item.currency)}
+                  </p>
+                  <div className="inline-flex items-center border border-white/15">
                     <button
                       onClick={() => updateQuantity(item.slug, item.quantity - 1)}
-                      className="w-9 h-9 text-lg hover:bg-surface-hover"
+                      className="w-9 h-9 text-lg text-[#ece8e1] hover:bg-white/5 transition-colors"
                       aria-label={t.cart.decrease}
                     >
                       −
@@ -134,7 +138,7 @@ function CartDrawer({
                     <span className="w-9 text-center text-base">{item.quantity}</span>
                     <button
                       onClick={() => updateQuantity(item.slug, item.quantity + 1)}
-                      className="w-9 h-9 text-lg hover:bg-surface-hover"
+                      className="w-9 h-9 text-lg text-[#ece8e1] hover:bg-white/5 transition-colors"
                       aria-label={t.cart.increase}
                     >
                       +
@@ -145,12 +149,12 @@ function CartDrawer({
                 <div className="flex flex-col items-end justify-between">
                   <button
                     onClick={() => removeFromCart(item.slug)}
-                    className="text-muted hover:text-foreground text-sm"
+                    className="text-[#8a8580] hover:text-[#d4af37] text-sm transition-colors"
                     aria-label={t.cart.remove}
                   >
                     {t.cart.remove}
                   </button>
-                  <p className="text-2xl leading-none">
+                  <p className="text-2xl leading-none text-[#f5f2ec]">
                     {formatPrice(item.price * item.quantity, item.currency)}
                   </p>
                 </div>
@@ -158,26 +162,26 @@ function CartDrawer({
             ))}
           </div>
 
-          <div className="px-6 py-5 border-t border-border/70 space-y-4">
+          <div className="px-6 py-5 border-t border-white/10 space-y-4">
             <div className="flex items-end justify-between gap-4">
-              <p className="text-2xl md:text-3xl leading-none font-light">
+              <p className="text-2xl md:text-3xl leading-none font-light text-[#f5f2ec]">
                 {t.cart.totalEstimated}
               </p>
-              <p className="text-3xl md:text-4xl leading-none font-light whitespace-nowrap">
+              <p className="text-3xl md:text-4xl leading-none font-light whitespace-nowrap text-[#f5f2ec]">
                 {formatPrice(totalPrice, currency)}
               </p>
             </div>
 
-            <p className="text-muted text-sm">{t.cart.taxesNote}</p>
+            <p className="text-[#8a8580] text-sm">{t.cart.taxesNote}</p>
 
             <button
               onClick={checkout}
               disabled={!hasItems || isCheckingOut}
-              className="w-full py-3.5 bg-accent text-white text-xl font-medium hover:bg-accent-dim transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+              className="w-full py-3.5 bg-[#d4af37] text-[#0c0d10] text-xl font-semibold hover:bg-[#e6c558] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isCheckingOut ? t.cart.redirecting : t.cart.checkout}
             </button>
-            <button className="w-full py-3.5 border border-accent text-accent text-xl hover:bg-surface-hover transition-colors">
+            <button className="w-full py-3.5 border border-[#d4af37]/40 text-[#d4af37] text-xl hover:bg-[#d4af37]/10 transition-colors">
               {t.cart.viewCart}
             </button>
           </div>

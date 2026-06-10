@@ -35,7 +35,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
             : "fixed top-0 left-0 right-0 z-40 bg-background/80 backdrop-blur-md border-b border-border/50"
       }
     >
-      <nav className="max-w-[1400px] mx-auto flex items-center justify-between px-6 md:px-10 h-16">
+      <nav className="max-w-[1760px] mx-auto flex items-center justify-between px-5 md:px-10 h-16">
         <Link href="/" className="flex items-center gap-3 group">
           <span
             className={
@@ -219,7 +219,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
                   : "md:hidden overflow-hidden border-b border-border/50 bg-background/95 backdrop-blur-md"
             }
           >
-            <div className="flex flex-col gap-4 px-6 py-6">
+            <div className="flex flex-col gap-4 px-5 md:px-10 py-6">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}

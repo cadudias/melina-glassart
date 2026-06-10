@@ -14,6 +14,7 @@ export default function ProductCardV2({
   index: number;
 }) {
   const { t } = useI18n();
+  const cardImages = product.cardImages ?? product.images;
 
   return (
     <motion.article
@@ -28,20 +29,22 @@ export default function ProductCardV2({
       className="font-[family-name:var(--font-v2-sans)]"
     >
       <Link href={`/product/${product.slug}`} className="group block">
-        <div className="relative aspect-[4/5] overflow-hidden bg-[#16181f] mb-5 ring-1 ring-white/10">
+        <div className="relative aspect-[4/5] overflow-hidden bg-[#0a0b0e] mb-5 ring-1 ring-white/10">
           <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.04]">
             <Image
-              src={product.images[0]}
+              src={cardImages[0]}
               alt={product.title}
               fill
+              quality={90}
               sizes="(max-width: 640px) 100vw, 33vw"
               className="object-cover"
             />
-            {product.images[1] && (
+            {cardImages[1] && (
               <Image
-                src={product.images[1]}
+                src={cardImages[1]}
                 alt={`${product.title} — ${t.card.alternateView}`}
                 fill
+                quality={90}
                 sizes="(max-width: 640px) 100vw, 33vw"
                 className="object-cover opacity-0 transition-opacity duration-[900ms] ease-in-out group-hover:opacity-100"
               />

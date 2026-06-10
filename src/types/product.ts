@@ -27,6 +27,8 @@ export interface Product {
   compareAtPrice?: LocalizedPrice;
   available: boolean;
   images: string[];
+  /** Recortes verticais (capa + hover) para o card da listagem. Cai para `images` se ausente. */
+  cardImages?: string[];
   dimensions: {
     width: number;
     height: number;

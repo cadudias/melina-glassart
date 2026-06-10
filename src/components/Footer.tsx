@@ -34,7 +34,7 @@ export default function Footer({ variant = "light" }: FooterProps) {
             : "border-t border-border/50 mt-auto"
       }
     >
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-12 md:py-16">
+      <div className="max-w-[1760px] mx-auto px-5 md:px-10 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-10">
           {/* Brand */}
           <div>
